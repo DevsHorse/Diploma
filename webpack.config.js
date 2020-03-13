@@ -38,7 +38,8 @@ module.exports = {
 		new CopyWebpackPlugin([
 			{ from: path.resolve(SRC, 'css'), to: path.resolve(DEST, 'css') },
 			{ from: path.resolve(SRC, 'fonts'), to: path.resolve(DEST, 'fonts') },
-			{ from: path.resolve(SRC, 'img'), to: path.resolve(DEST, 'img') }
+			{ from: path.resolve(SRC, 'img'), to: path.resolve(DEST, 'img') },
+			{ from: path.resolve(SRC, 'server.php'), to: path.resolve(DEST, 'server.php') }
 		])
 	]
 };
