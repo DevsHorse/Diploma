@@ -9,6 +9,11 @@ const popUpDiscount = ()=> {
     if (target.classList.contains('discount-btn')) {
       showModal(popUpDiscount);
     }
+    if (target.classList.contains('add-sentence-btn')) {
+      const hidden = document.querySelectorAll('.invisible-card');
+      hidden.forEach(item => item.style.cssText = `display: block!important;`);
+      target.style.display = 'none';
+    }
   });
 };
 

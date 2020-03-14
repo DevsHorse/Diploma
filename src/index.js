@@ -9,8 +9,8 @@ import ajax from './modules/ajax';
 
 document.addEventListener('DOMContentLoaded', () => {
 
+	//data 
 	let data = {};
-
 	const dataCalc = res => {
 		data.questionConsult = res;
 	};
@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	popUpDiscount();
 	popUpConsultation(dataCalc);
 	modalsClose();
-	
+
+	//ajax
 	ajax(data);
 });

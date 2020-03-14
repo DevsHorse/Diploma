@@ -8,6 +8,11 @@ const ajax = (innerData = {}) => {
    errorMessage = 'Ошибка отправки!',
    loadingMessage = 'Загрузка...';
 
+   messageContainer.style.cssText = `
+        font-size: 18px;
+        font-weight: 700;
+        `;
+
   const postAjax = data => {
     return fetch('./server.php', {
       method: 'POST',
@@ -21,11 +26,12 @@ const ajax = (innerData = {}) => {
   const ajaxResponse = () => {
     forms.forEach(form => form.addEventListener('submit', event => {
       event.preventDefault();
-      console.log('submit');
       const formInputs = form.querySelectorAll('input');
+      form.insertAdjacentElement('beforeend', messageContainer);
 
       const isValid = new Validate(form);
       if (isValid.init() !== true) {
+        messageContainer.innerHTML = 'Ошибка ввода!';
         return;
       }
 
@@ -43,7 +49,6 @@ const ajax = (innerData = {}) => {
         return data;
       };
 
-      form.insertAdjacentElement('beforeend', messageContainer);
       messageContainer.innerHTML = loadingMessage;
 
       const clearBlocks = setTimeout(() => {
