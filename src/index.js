@@ -6,6 +6,7 @@ import popUpCheck from './modules/popUpCheck';
 import popUpDiscount from './modules/popUpDiscount';
 import popUpCall from './modules/popUpCall';
 import ajax from './modules/ajax';
+import toggleAccordion from './modules/accordionTwo';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -21,6 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	popUpDiscount();
 	popUpConsultation(dataCalc);
 	modalsClose();
+
+	toggleAccordion();
 
 	//ajax
 	ajax(data);

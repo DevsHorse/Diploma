@@ -3,8 +3,9 @@ class Validate {
     this.form = form;
     this.inputs = this.form.querySelectorAll('input');
     this.patterns = [
-      ["name", /^[а-яА-Я]*$/ ],
-      ["phone", /^\+?\d*$/]
+      ["name", /^[а-яА-ЯёЁ]*$/ ],
+      ["phone", /^\+?\d*$/ ],
+      ["question", /^[а-яА-ЯёЁ0-9\?-\s]*$/ ]
     ];
   }
   init() {
