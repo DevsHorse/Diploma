@@ -13,32 +13,37 @@ const ajax = (innerData = {}) => {
         font-weight: 700;
         `;
 
+  //Ajax post      
   const postAjax = data => {
     return fetch('./server.php', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     });
   };
 
-
+  //Ajax response function
   const ajaxResponse = () => {
     forms.forEach(form => {
-      
+
+      //Set validation to all forms
       const validateInputs = new Validate(form);
       validateInputs.init();
 
       form.addEventListener('submit', event => {
         event.preventDefault();
+
         const formInputs = form.querySelectorAll('input');
         form.insertAdjacentElement('beforeend', messageContainer);
 
+        //Set validate to submit event
         if (validateInputs.submitValidate() !== true) {
           return;
         }
 
+        //Function join parts of data to one object
         const bundleData = () => {
           let data = {};
           formInputs.forEach(input => {
@@ -48,13 +53,12 @@ const ajax = (innerData = {}) => {
           for (let key of Object.keys(innerData)) {
             data[key] = innerData[key];
           }
-
-          console.log(data);
           return data;
         };
 
         messageContainer.innerHTML = loadingMessage;
 
+        //Clear status message after submit
         const clearBlocks = setTimeout(() => {
           messageContainer.innerHTML = '';
           formInputs.forEach(item => item.value = '');
@@ -68,22 +72,18 @@ const ajax = (innerData = {}) => {
           messageContainer.innerHTML = errorMessage;
         };
 
-        //testResponse для тестов, потом его не будет
-        const testResponse = () => {
-          postAjax(bundleData())
-          .then(response => {
-            if (response.status !== 200) {
-              throw setErrorMessage;
-            }
-            setSuccessMesage();
-          })
-          .catch(error => error())
-          .finally(() => clearBlocks);
-        };
-        
-        setTimeout(testResponse, 1000);
-        
-      })
+        //Ajax response handler
+        postAjax(bundleData())
+        .then(response => {
+          if (response.status !== 200) {
+            throw setErrorMessage;
+          }
+          setSuccessMesage();
+        })
+        .catch(error => error())
+        .finally(() => clearBlocks);
+
+      });
     });
   };
   ajaxResponse();

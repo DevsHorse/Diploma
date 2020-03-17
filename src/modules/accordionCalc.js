@@ -1,26 +1,27 @@
 const accordionCalc = () => {
   const calcBlock = document.querySelector('.constructor');
 
+  //Deligate calc block (accordion)
   calcBlock.addEventListener('click', event => {
     event.preventDefault();
     let target = event.target;
     const panelCollapse = document.querySelectorAll('.collapse1');
     const checkboxType = document.querySelector('.checkbox-type');
-    const checkboxThree = document.querySelector('.checkbox-three');
     const collapseTwoTwo = document.querySelector('.collapseTwo-two');
 
-
+    //If target "type checkbox" then toggle attribute checked
     if (target.closest('.onoffswitch') && target.parentNode.tagName === 'LABEL') {
       target.parentNode.previousElementSibling.toggleAttribute('checked');
     }
 
+    //Depending of type checkbox value - show or hide second well block
     if (checkboxType.hasAttribute('checked')) {
       collapseTwoTwo.style.display = 'none';
     } else {
       collapseTwoTwo.style.display = 'block';
     }
 
-
+    //Target's redefinition and remove class "show" at non-target items
     if (target.closest('.panel-heading')) {
       if (target.tagName === 'SPAN') {
         target = target.parentNode.parentNode.parentNode;
@@ -41,6 +42,7 @@ const accordionCalc = () => {
       });
     }
 
+    //If target - "btn next panel" then unshown current panel
     if (target.closest('.construct-btn')) {
 
       if (target.tagName === 'SPAN') {

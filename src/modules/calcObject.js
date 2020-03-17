@@ -11,6 +11,8 @@ class CaclData {
     this.data = {};
   }
   init() {
+    
+    //Formation part data object of calculate block 
     this.type = this.type === true ? 'Однокамерный' : 'Двухкамерный';
     this.bottom = this.bottom === true ? 'есть' : 'нет';
 

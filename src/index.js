@@ -12,29 +12,31 @@ import calculatePrice from './modules/calculate';
 
 document.addEventListener('DOMContentLoaded', () => {
 
-	//data 
 	let data = {};
+	
+	//Formation final data object 
 	const consultCalc = res => {
 		data.questionConsult = res;
 	};
 
 	const addCalcValues = res => {
-		console.log(res);
 		data.calcValues = res;
 	};
 
+	//Calculate price of calc block
 	calculatePrice();
 
-	//Modals
+	//Modals 
 	popUpCall(addCalcValues);
 	popUpCheck();
 	popUpDiscount();
 	popUpConsultation(consultCalc);
 	modalsClose();
 
+	//Accordions functional
 	toggleAccordion();
 	accordionCalc();
 
-	//ajax
+	//Ajax post function
 	ajax(data);
 });

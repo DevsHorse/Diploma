@@ -1,9 +1,10 @@
-const calculatePrice = result => {
+const calculatePrice = () => {
   const calcResult = document.getElementById('calc-result'),
     accordionBlock = document.querySelector('.panel-group');
 
-    let resultPrice = 0;
+  let resultPrice = 0;
 
+  //Body calc function
   const calcInputs = () => {
     let price = 0;
     resultPrice = 0;
@@ -15,6 +16,7 @@ const calculatePrice = result => {
     checkboxType = document.querySelector('.checkbox-type'),
     checkboxThree = document.querySelector('.checkbox-three');
 
+    //Calculate price depending of the diameters and rings values
     const calcDiameterAndRings = (selector, option) => {
         const value = selector.value.match(/^[0-9]{1}\.[0-9]{1}|[0-9]{1}/)[0];
 
@@ -56,6 +58,7 @@ const calculatePrice = result => {
     } 
   };
 
+  //Animation result display
     let count = 0;
     let animateId;
     const animateResult = () => {
@@ -68,13 +71,14 @@ const calculatePrice = result => {
       calcResult.value = count;
     };
 
+  //Deligate calc block
   accordionBlock.addEventListener('click', event => {
     calcInputs();
     animateId = requestAnimationFrame(animateResult);
     count = 0;
   });
 
-
+  //Listening checkboxes changes
   const findParent = (elem, predicate) => {
     const traverseUp = (_elem) => {
       if (_elem.parentElement && predicate(_elem.parentElement)) {
