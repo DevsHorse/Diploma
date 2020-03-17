@@ -1,14 +1,14 @@
 import showModal from './showModal';
-import Validate from './validate';
+import FormValidator from './validate';
 
-const popUpConsultation = result => {
+const popUpConsultation = next => {
   const directorForm = document.querySelector('.director-form');
   const popUpConsultation = document.querySelector('.popup-consultation');
   const consultQuestion = document.querySelector('.consult-question');
 
   //Set validate on directorForm and set cssOption ('question')
-  const isValid = new Validate(directorForm);
-  isValid.init('question');
+  const formValidator = new FormValidator(directorForm);
+  formValidator.init('question');
 
   directorForm.addEventListener('submit', event => {
     let dataPart = consultQuestion.value;
@@ -18,7 +18,7 @@ const popUpConsultation = result => {
     if (consultQuestion.value && isValid.submitValidate() === true) {
       showModal(popUpConsultation);
     }
-    return result(dataPart); // Return part of data to index.js
+    return next(dataPart); // Return part of data to index.js
   });
 };
 

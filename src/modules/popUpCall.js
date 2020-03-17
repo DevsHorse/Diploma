@@ -1,7 +1,7 @@
 import showModal from './showModal';
 import CaclData from './calcObject';
 
-const popUpCall = result => {
+const popUpCall = next => {
   const popUpCall = document.querySelector('.popup-call');
   const callBtns = document.querySelectorAll('.call-btn');
 
@@ -17,7 +17,7 @@ const popUpCall = result => {
           const newData = new CaclData();
           const res = newData.init();
           showModal(popUpCall);
-          result(res); // return part of data to index.js
+          next(res); // return part of data to index.js
         }
       } else {
         showModal(popUpCall);

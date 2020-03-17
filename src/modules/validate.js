@@ -44,14 +44,14 @@ class Validate {
       input.addEventListener('input', () => {
 
         //Check, is "valid" input or not
-        const isValid = this.checkInputs(input);
+        const isValid = this.checkInput(input);
 
         //Set message if {isValid} === false \ if "true" - reset message text
         this.message(div, input, isValid);
       });
     });
   }
-  checkInputs(input) {
+  checkInput(input) {
     let isValid = false;
 
     //Looking for needed pattern and test that pattern on input value

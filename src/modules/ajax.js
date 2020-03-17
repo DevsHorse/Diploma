@@ -25,68 +25,65 @@ const ajax = (innerData = {}) => {
   };
 
   //Ajax response function
-  const ajaxResponse = () => {
-    forms.forEach(form => {
+  forms.forEach(form => {
 
-      //Set validation to all forms
-      const validateInputs = new Validate(form);
-      validateInputs.init();
+    //Set validation to all forms
+    const validateInputs = new Validate(form);
+    validateInputs.init();
 
-      form.addEventListener('submit', event => {
-        event.preventDefault();
+    form.addEventListener('submit', event => {
+      event.preventDefault();
 
-        const formInputs = form.querySelectorAll('input');
-        form.insertAdjacentElement('beforeend', messageContainer);
+      const formInputs = form.querySelectorAll('input');
+      form.insertAdjacentElement('beforeend', messageContainer);
 
-        //Set validate to submit event
-        if (validateInputs.submitValidate() !== true) {
-          return;
+      //Set validate to submit event
+      if (validateInputs.submitValidate() !== true) {
+        return;
+      }
+
+      //Function join parts of data to one object
+      const bundleData = () => {
+        let data = {};
+        formInputs.forEach(input => {
+          data[input.id.match(/^[a-z]*/)] = input.value;
+        });
+
+        for (let key of Object.keys(innerData)) {
+          data[key] = innerData[key];
         }
+        return data;
+      };
 
-        //Function join parts of data to one object
-        const bundleData = () => {
-          let data = {};
-          formInputs.forEach(input => {
-            data[input.id.match(/^[a-z]*/)] = input.value;
-          });
+      messageContainer.innerHTML = loadingMessage;
 
-          for (let key of Object.keys(innerData)) {
-            data[key] = innerData[key];
-          }
-          return data;
-        };
+      //Clear status message after submit
+      const clearBlocks = () => setTimeout(() => {
+        messageContainer.innerHTML = '';
+        formInputs.forEach(item => item.value = '');
+      }, 3000); 
 
-        messageContainer.innerHTML = loadingMessage;
+      const setSuccessMesage = () => {
+          messageContainer.innerHTML = successMessage;
+      };
 
-        //Clear status message after submit
-        const clearBlocks = setTimeout(() => {
-          messageContainer.innerHTML = '';
-          formInputs.forEach(item => item.value = '');
-        }, 3000); 
+      const setErrorMessage = () => {
+        messageContainer.innerHTML = errorMessage;
+      };
 
-        const setSuccessMesage = () => {
-            messageContainer.innerHTML = successMessage;
-        };
+      //Ajax response handler
+      postAjax(bundleData())
+      .then(response => {
+        if (response.status !== 200) {
+          throw setErrorMessage;
+        }
+        setSuccessMesage();
+      })
+      .catch(error => error())
+      .finally(() => clearBlocks());
 
-        const setErrorMessage = () => {
-          messageContainer.innerHTML = errorMessage;
-        };
-
-        //Ajax response handler
-        postAjax(bundleData())
-        .then(response => {
-          if (response.status !== 200) {
-            throw setErrorMessage;
-          }
-          setSuccessMesage();
-        })
-        .catch(error => error())
-        .finally(() => clearBlocks);
-
-      });
     });
-  };
-  ajaxResponse();
+  });
 };
 
 export default ajax;
