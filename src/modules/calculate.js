@@ -35,17 +35,17 @@ const calculatePrice = result => {
 
     if (checkboxType.hasAttribute('checked')) {
       price = 10000;
+      resultPrice = price;
+      calcDiameterAndRings(diameter1, 'diameter');
+      calcDiameterAndRings(numberOfRings1, 'rings');
     } else {
       price = 15000;
+      resultPrice = price;
+      calcDiameterAndRings(diameter1, 'diameter');
+      calcDiameterAndRings(numberOfRings1, 'rings');
+      calcDiameterAndRings(diameter2, 'diameter');
+      calcDiameterAndRings(numberOfRings2, 'rings');
     }
-  
-    resultPrice = price;
-
-    calcDiameterAndRings(diameter1, 'diameter');
-    calcDiameterAndRings(diameter2, 'diameter');
-
-    calcDiameterAndRings(numberOfRings1, 'rings');
-    calcDiameterAndRings(numberOfRings2, 'rings');
 
     if (checkboxThree.hasAttribute('checked')) {
       if (price === 10000) {
@@ -54,12 +54,8 @@ const calculatePrice = result => {
         resultPrice += 2000;
       }
     } 
-
-    // calcResult.value = resultPrice;
   };
 
-  accordionBlock.addEventListener('click', event => {
-    calcInputs();
     let count = 0;
     let animateId;
     const animateResult = () => {
@@ -71,7 +67,11 @@ const calculatePrice = result => {
       }
       calcResult.value = count;
     };
+
+  accordionBlock.addEventListener('click', event => {
+    calcInputs();
     animateId = requestAnimationFrame(animateResult);
+    count = 0;
   });
 
 
