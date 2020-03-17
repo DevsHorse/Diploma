@@ -12,7 +12,11 @@ const modalsClose = () => {
       
       document.body.style.overflow = 'auto';
       item.style.display = 'none';
-      inputs.forEach(input => input.value = '');
+      inputs.forEach(input => {
+        input.value = '';
+        input.style.borderColor = '';
+        input.nextElementSibling.innerHTML = '';
+      });
     }
   }));
 

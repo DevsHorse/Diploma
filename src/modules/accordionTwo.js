@@ -4,15 +4,23 @@ const toggleAccordion = () => {
   questionsBlock.addEventListener('click', event => {
     event.preventDefault();
     
-    const target = event.target;
-    const panelCollapse = document.querySelectorAll('.panel-collapse');
+    let target = event.target;
+    const panelCollapse = document.querySelectorAll('.collapse2');
 
-    if (target.closest('.panel-heading') && target.nodeName === 'A') {
-      panelCollapse.forEach(item => item.classList.remove('in'));
-
-      const collapse = target.parentNode.parentNode.nextElementSibling;
-      collapse.classList.add('in');
-
+    if (target.tagName === 'A') {
+      target = target.parentNode.parentNode;
+    }
+    if (target.tagName === 'H4') {
+      target = target.parentNode;
+    }
+    const collapse = target.nextElementSibling;
+    
+    if (target.closest('.panel-heading') && target.nodeName === 'DIV') {
+      panelCollapse.forEach(item => {
+        if (item.id !== collapse.id) {
+          item.classList.remove('show');
+        }
+      });
     }
   });
 };

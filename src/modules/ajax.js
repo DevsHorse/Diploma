@@ -23,63 +23,68 @@ const ajax = (innerData = {}) => {
     });
   };
 
+
   const ajaxResponse = () => {
-    forms.forEach(form => form.addEventListener('submit', event => {
-      event.preventDefault();
-      const formInputs = form.querySelectorAll('input');
-      form.insertAdjacentElement('beforeend', messageContainer);
+    forms.forEach(form => {
+      
+      const validateInputs = new Validate(form);
+      validateInputs.init();
 
-      const isValid = new Validate(form);
-      if (isValid.init() !== true) {
-        messageContainer.innerHTML = 'Ошибка ввода!';
-        return;
-      }
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        const formInputs = form.querySelectorAll('input');
+        form.insertAdjacentElement('beforeend', messageContainer);
 
-      const bundleData = () => {
-        let data = {};
-        formInputs.forEach(input => {
-          data[input.id.match(/^[a-z]*/)] = input.value;
-        });
-
-        for (let key of Object.keys(innerData)) {
-          data[key] = innerData[key];
+        if (validateInputs.submitValidate() !== true) {
+          return;
         }
 
-        console.log(data);
-        return data;
-      };
+        const bundleData = () => {
+          let data = {};
+          formInputs.forEach(input => {
+            data[input.id.match(/^[a-z]*/)] = input.value;
+          });
 
-      messageContainer.innerHTML = loadingMessage;
-
-      const clearBlocks = setTimeout(() => {
-        messageContainer.innerHTML = '';
-        formInputs.forEach(item => item.value = '');
-      }, 3000); 
-
-      const setSuccessMesage = () => {
-          messageContainer.innerHTML = successMessage;
-      };
-
-      const setErrorMessage = () => {
-        messageContainer.innerHTML = errorMessage;
-      };
-
-      //testResponse для тестов, потом его не будет
-      const testResponse = () => {
-        postAjax(bundleData())
-        .then(response => {
-          if (response.status !== 200) {
-            throw setErrorMessage;
+          for (let key of Object.keys(innerData)) {
+            data[key] = innerData[key];
           }
-          setSuccessMesage();
-        })
-        .catch(error => error())
-        .finally(() => clearBlocks);
-      };
-      
-      setTimeout(testResponse, 1000);
-      
-    }));
+
+          console.log(data);
+          return data;
+        };
+
+        messageContainer.innerHTML = loadingMessage;
+
+        const clearBlocks = setTimeout(() => {
+          messageContainer.innerHTML = '';
+          formInputs.forEach(item => item.value = '');
+        }, 3000); 
+
+        const setSuccessMesage = () => {
+            messageContainer.innerHTML = successMessage;
+        };
+
+        const setErrorMessage = () => {
+          messageContainer.innerHTML = errorMessage;
+        };
+
+        //testResponse для тестов, потом его не будет
+        const testResponse = () => {
+          postAjax(bundleData())
+          .then(response => {
+            if (response.status !== 200) {
+              throw setErrorMessage;
+            }
+            setSuccessMesage();
+          })
+          .catch(error => error())
+          .finally(() => clearBlocks);
+        };
+        
+        setTimeout(testResponse, 1000);
+        
+      })
+    });
   };
   ajaxResponse();
 };

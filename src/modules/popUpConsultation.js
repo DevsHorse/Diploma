@@ -6,13 +6,14 @@ const popUpConsultation = result => {
   const popUpConsultation = document.querySelector('.popup-consultation');
   const consultQuestion = document.querySelector('.consult-question');
 
+  const isValid = new Validate(directorForm);
+  isValid.init('question');
 
   directorForm.addEventListener('submit', event => {
     let dataPart = consultQuestion.value;
     event.preventDefault();
-    const isValid = new Validate(directorForm);
   
-    if (consultQuestion.value && isValid.init() === true) {
+    if (consultQuestion.value && isValid.submitValidate() === true) {
       showModal(popUpConsultation);
     }
     return result(dataPart);

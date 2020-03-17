@@ -5,6 +5,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+
+
 const SRC = path.resolve(__dirname, 'src');
 const DEST = path.resolve(__dirname, '.dist');
 
