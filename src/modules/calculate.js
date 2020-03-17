@@ -2,9 +2,11 @@ const calculatePrice = result => {
   const calcResult = document.getElementById('calc-result'),
     accordionBlock = document.querySelector('.panel-group');
 
+    let resultPrice = 0;
+
   const calcInputs = () => {
     let price = 0;
-    let resultPrice = 0;
+    resultPrice = 0;
 
     const diameter1 = document.querySelector('.diameter'),
     diameter2 = document.querySelector('.diameter2'),
@@ -53,12 +55,25 @@ const calculatePrice = result => {
       }
     } 
 
-    calcResult.value = resultPrice;
+    // calcResult.value = resultPrice;
   };
 
   accordionBlock.addEventListener('click', event => {
     calcInputs();
+    let count = 0;
+    let animateId;
+    const animateResult = () => {
+      animateId = requestAnimationFrame(animateResult);
+      count += 500;
+      if (count >= resultPrice) {
+        calcResult.value = resultPrice;
+        cancelAnimationFrame(animateId);
+      }
+      calcResult.value = count;
+    };
+    animateId = requestAnimationFrame(animateResult);
   });
+
 
   const findParent = (elem, predicate) => {
     const traverseUp = (_elem) => {
